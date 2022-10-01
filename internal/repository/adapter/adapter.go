@@ -17,7 +17,9 @@ type Interface interface {
 func NewAdpter() Interface {}
 
 func (db *Database) health() bool {
-	db.connection.ListTables(&dynamodb.ListTablesInput{})
+	_, err := db.connection.ListTables(&dynamodb.ListTablesInput{})
+
+	return err == nil
 }
 
 func (db *Database) FindAll() {}
