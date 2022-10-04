@@ -20,6 +20,7 @@ func InterfaceToModel(data interface{}) (instance *Product, err error) {
 	if err != nil {
 		return instance, err
 	}
+
 	return instance, json.Unmarshal(bytes, &instance)
 }
 
@@ -46,13 +47,13 @@ func (p *Product) GetMap() map[string]interface{} {
 
 func ParseDynamoAtributeToStruct(response map[string]*dynamodb.AttributeValue) (p Product, err error) {
 	if response == nil || (response != nil && len(response) == 0) {
-		return p, errors.New("item not found")
+		return p, errors.New("Item not found")
 	}
 	for key, value := range response {
 		if key == "_id" {
 			p.ID, err = uuid.Parse(*value.S)
 			if p.ID == uuid.Nil {
-				err = errors.New("item not found")
+				err = errors.New("Item not found")
 			}
 		}
 		if key == "name" {

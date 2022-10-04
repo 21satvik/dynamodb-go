@@ -7,5 +7,6 @@ func GetEnv(env, defaultValue string) string {
 	if environment == "" {
 		return defaultValue
 	}
+
 	return environment
 }

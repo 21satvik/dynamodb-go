@@ -54,22 +54,22 @@ func StatusBadRequest(w http.ResponseWriter, r *http.Request, err error) {
 // 404
 func StatusNotFound(w http.ResponseWriter, r *http.Request, err error) {
 	data := map[string]interface{}{"error": err.Error()}
-	newResponse(data, http.StatusBadRequest).sendResponse(w, r)
+	newResponse(data, http.StatusNotFound).sendResponse(w, r)
 }
 
 // 405
 func StatusMethodNotAllowed(w http.ResponseWriter, r *http.Request) {
-	newResponse(nil, http.StatusBadRequest).sendResponse(w, r)
+	newResponse(nil, http.StatusMethodNotAllowed).sendResponse(w, r)
 }
 
 // 409
 func StatusConflict(w http.ResponseWriter, r *http.Request, err error) {
 	data := map[string]interface{}{"error": err.Error()}
-	newResponse(data, http.StatusBadRequest).sendResponse(w, r)
+	newResponse(data, http.StatusConflict).sendResponse(w, r)
 }
 
 // 500
 func StatusInternalServerError(w http.ResponseWriter, r *http.Request, err error) {
 	data := map[string]interface{}{"error": err.Error()}
-	newResponse(data, http.StatusBadRequest).sendResponse(w, r)
+	newResponse(data, http.StatusInternalServerError).sendResponse(w, r)
 }

@@ -11,8 +11,8 @@ import (
 	"github.com/21satvik/dynamodb-go/internal/entities/product"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"github.com/go-ozzo/ozzo-validation/is"
 	Validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/go-ozzo/ozzo-validation/v4/is"
 	"github.com/google/uuid"
 )
 
@@ -22,18 +22,18 @@ func NewRules() *Rules {
 	return &Rules{}
 }
 
-func (r *Rules) ConvertIoReaderToStruct(data io.Reader, model interface{}) (body interface{}, err error) {
+func (r *Rules) ConvertIoReaderToStruct(data io.Reader, model interface{}) (interface{}, error) {
 	if data == nil {
-		return nil, errors.New("body in invalid")
+		return nil, errors.New("body is invalid")
 	}
 	return model, json.NewDecoder(data).Decode(model)
 }
 
 func (r *Rules) Migrate(connection *dynamodb.DynamoDB) error {
-	return r.CreateTable(connection)
+	return r.createTable(connection)
 }
 
-func (r *Rules) CreateTable(connection *dynamodb.DynamoDB) error {
+func (r *Rules) createTable(connection *dynamodb.DynamoDB) error {
 	table := &product.Product{}
 
 	input := &dynamodb.CreateTableInput{
@@ -61,7 +61,7 @@ func (r *Rules) CreateTable(connection *dynamodb.DynamoDB) error {
 	}
 	if response != nil && strings.Contains(response.GoString(), "TableStatus: \"CREATING\"") {
 		time.Sleep(3 * time.Second)
-		err = r.CreateTable(connection)
+		err = r.createTable(connection)
 		if err != nil {
 			return err
 		}

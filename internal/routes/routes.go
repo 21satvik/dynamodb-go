@@ -22,14 +22,15 @@ func NewRouter() *Router {
 }
 
 func (r *Router) SetRouters(repository adapter.Interface) *chi.Mux {
-	r.SetConfigsRouters()
+	r.setConfigsRouters()
+
 	r.RouterHealth(repository)
 	r.RouterProduct(repository)
 
 	return r.router
 }
 
-func (r *Router) SetConfigsRouters() {
+func (r *Router) setConfigsRouters() {
 	r.EnableCORS()
 	r.EnableLogger()
 	r.EnableTimeout()
@@ -39,25 +40,24 @@ func (r *Router) SetConfigsRouters() {
 }
 
 func (r *Router) RouterHealth(repository adapter.Interface) {
-
 	handler := HealthHandler.NewHandler(repository)
 
 	r.router.Route("/health", func(route chi.Router) {
 		route.Post("/", handler.Post)
 		route.Get("/", handler.Get)
-		route.Put("/{ID}", handler.Put)
-		route.Delete("/{ID}", handler.Delete)
+		route.Put("/", handler.Put)
+		route.Delete("/", handler.Delete)
 		route.Options("/", handler.Options)
 	})
 }
 
 func (r *Router) RouterProduct(repository adapter.Interface) {
-
 	handler := ProductHandler.NewHandler(repository)
 
 	r.router.Route("/product", func(route chi.Router) {
 		route.Post("/", handler.Post)
 		route.Get("/", handler.Get)
+		route.Get("/{ID}", handler.Get)
 		route.Put("/{ID}", handler.Put)
 		route.Delete("/{ID}", handler.Delete)
 		route.Options("/", handler.Options)
@@ -85,7 +85,7 @@ func (r *Router) EnableRecover() *Router {
 }
 
 func (r *Router) EnableRequestID() *Router {
-	r.router.Use((middleware.RequestID))
+	r.router.Use(middleware.RequestID)
 	return r
 }
 

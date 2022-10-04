@@ -1,9 +1,8 @@
 package entities
 
 import (
-	"time"
-
 	"github.com/google/uuid"
+	"time"
 )
 
 type Interface interface {
@@ -34,5 +33,5 @@ func (b *Base) SetUpdatedAt() {
 }
 
 func GetTimeFormat() string {
-	return "2010-01-02T15:04:05-0700"
+	return "2006-01-02T15:04:05-0700"
 }

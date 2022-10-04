@@ -1,9 +1,8 @@
 package rules
 
 import (
-	"io"
-
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"io"
 )
 
 type Interface interface {
