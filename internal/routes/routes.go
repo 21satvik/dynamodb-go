@@ -2,8 +2,8 @@ package routes
 
 import (
 	ServerConfig "github.com/21satvik/dynamodb-go/config"
-	// HealthHandler "github.com/21satvik/dynamodb-go/internal/handlers/health"
-	// ProductHandler "github.com/21satvik/dynamodb-go/internal/handlers/product"
+	HealthHandler "github.com/21satvik/dynamodb-go/internal/handlers/health"
+	ProductHandler "github.com/21satvik/dynamodb-go/internal/handlers/product"
 	"github.com/21satvik/dynamodb-go/internal/repository/adapter"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -40,7 +40,7 @@ func (r *Router) SetConfigsRouters() {
 
 func (r *Router) RouterHealth(repository adapter.Interface) {
 
-	handler := HealthHandler.newHandler(repository)
+	handler := HealthHandler.NewHandler(repository)
 
 	r.router.Route("/health", func(route chi.Router) {
 		route.Post("/", handler.Post)

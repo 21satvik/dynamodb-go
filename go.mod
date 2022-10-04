@@ -9,5 +9,6 @@ require (
 
 require (
 	github.com/aws/aws-sdk-go v1.44.109 // indirect
+	github.com/google/uuid v1.3.0
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 )
