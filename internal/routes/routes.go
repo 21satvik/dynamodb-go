@@ -16,7 +16,7 @@ type Router struct {
 
 func NewRouter() *Router {
 	return &Router{
-		config: NewConfig().SetTimeout(ServerConfig.GetConfig().GetTimeout()),
+		config: NewConfig().SetTimeout(ServerConfig.GetConfig().Timeout),
 		router: chi.NewRouter(),
 	}
 }
