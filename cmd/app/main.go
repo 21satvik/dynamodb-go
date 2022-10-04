@@ -10,6 +10,7 @@ import (
 	"github.com/21satvik/dynamodb-go/internal/repository/instance"
 	"github.com/21satvik/dynamodb-go/internal/routes"
 	"github.com/21satvik/dynamodb-go/internal/rules"
+	RulesProduct "github.com/21satvik/dynamodb-go/internal/rules/product"
 	"github.com/21satvik/dynamodb-go/utils/logger"
 
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -42,6 +43,8 @@ func Migrate(connection *dynamodb.DynamoDB) []error {
 	var errors []error
 
 	callMigrateAndAppendError(&errors, connection, &RulesProduct.Rules{})
+
+	return errors
 }
 
 func callMigrateAndAppendError(errors *[]error, connection *dynamodb.DynamoDB, rules rules.Interface) {
